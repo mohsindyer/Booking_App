@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+<body>
+<div class="jumbotron text-center" style="width:300px; height: 450px; margin:auto; border:1px solid; border-color: #54d1db; border-radius: 2%; margin-top: 5px">
+  <div className="circle" style="background:#54d1db; border-radius: 50%; height: 135px; width: 135px; align-items: center; position:relative; margin:20px auto;">
+<h2 style="color:white; position: absolute;
+top:50%;
+left:50%;
+transform: translate(-50%, -75%);">Booking App</h2><p></p>
+</div>
+<p id="date_message" style="color:red"></p>
+Booking time: <input type="time" id="time_booking" min="8:00:00" max="21:00:00">
+<p></p>
+
+Booking date: <input type="date" id="date_booking" min=Date()>
+
+<p></p>
+Number of Hours: <select id="hours">
+  <label>Select the number of hours:</label>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+</select>
+<p></p>
+<button class="btn btn-info" style="background-color:#54d1db;" onclick=calcPrice()>Get Price!</button>
+<p></p>
+<p id="demo"></p>
+</div>
+
+<script>
+let is_weekend =  function(date1){
+    let dt = new Date(date1);
+     
+    if(dt.getDay() == 6 || dt.getDay() == 5)
+       {
+        return 150;
+        } 
+    else{
+      return 100;
+    }
+}
+
+function calcPrice(){
+  let date_of_booking = document.getElementById('date_booking').value;
+  let hours = document.getElementById('hours').value;
+  let time_of_booking = document.getElementById('time_booking').value;
+
+  console.log(hours);
+  if (date_of_booking !== "" && time_of_booking!== "") {
+    let result = parseInt(hours) * is_weekend(date_of_booking) ;
+    document.getElementById("demo").innerHTML = "The price is $"+result;
+  } 
+  else {
+    document.getElementById("date_message").innerHTML = `Please choose date and time!`;
+  }
+
+}
+
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth()+1;
+let yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("date_booking").setAttribute("min", today);
+</script>
+
+</body>
+</html>
